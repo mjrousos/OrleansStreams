@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orleans-streams
+  labels:
+    app: orleans-streams
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orleans-streams
+  template:
+    metadata:
+      labels:
+        app: orleans-streams
+    spec:
+      containers:
+      - name: orleans-streams
+        image: mjrousos/orleans-streams:latest
+        resources:
+          limits:
+            cpu: 250m
+            memory: 250M

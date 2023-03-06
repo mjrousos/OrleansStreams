@@ -66,7 +66,8 @@ await sender.StartSendingAsync(60 * 10 * 1000, 4, 2500);
 
 Console.WriteLine("Orleans host started.");
 Console.WriteLine("Press enter to exit");
-Console.ReadLine();
+await Task.Delay(-1);
+//Console.ReadLine();
 
 await host.StopAsync();
 
