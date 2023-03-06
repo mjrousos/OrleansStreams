@@ -61,7 +61,8 @@ await host.StartAsync();
 
 var client = host.Services.GetRequiredService<IClusterClient>();
 var sender = client.GetGrain<ISender>("SenderA");
-await sender.StartSendingAsync(1000);
+await Task.Delay(15 * 1000);
+await sender.StartSendingAsync(60 * 10 * 1000, 4, 2500);
 
 Console.WriteLine("Orleans host started.");
 Console.WriteLine("Press enter to exit");

@@ -28,6 +28,7 @@ internal class Receiver : Grain, IReceiver
 class DemoEventHandler : IAsyncObserver<long>
 {
     private readonly Receiver _hostingReceiver;
+    private int _count = 0;
 
     public DemoEventHandler(Receiver hostingReceiver)
     {
@@ -49,7 +50,7 @@ class DemoEventHandler : IAsyncObserver<long>
     public Task OnNextAsync(long item, StreamSequenceToken? token = null)
     {
         var latency = DateTimeOffset.UtcNow.Ticks - item;
-        _hostingReceiver.logger.LogInformation("Stream {Id} received item: {Item}", _hostingReceiver.GetPrimaryKeyString(), item);
+        _hostingReceiver.logger.LogInformation("Stream {Id} received item #{Count}: {Item}", _hostingReceiver.GetPrimaryKeyString(), Interlocked.Increment(ref _count), item);
         _hostingReceiver.logger.LogInformation("Streaming message latency: {Latency}", TimeSpan.FromTicks(latency));
         return Task.CompletedTask;
     }
